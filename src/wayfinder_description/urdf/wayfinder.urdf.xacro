@@ -5,6 +5,7 @@
 
     <material name="green"><color rgba="0.4 0.6 0.2 1.0"/></material>
     <material name="black"><color rgba="0.1 0.1 0.1 1.0"/></material>
+    <material name="brown"><color rgba="0.82 0.70 0.55 1.0"/></material>
 
 
     <link name="base_footprint"/>
@@ -36,5 +37,7 @@
     <xacro:wheel prefix="front_right" x_offset="0.18"  y_offset="-0.21"/>
     <xacro:wheel prefix="rear_left"   x_offset="-0.18" y_offset="0.21"/>
     <xacro:wheel prefix="rear_right"  x_offset="-0.18" y_offset="-0.21"/>
+
+    <xacro:include filename="$(find wayfinder_description)/urdf/sensors.xacro"/>
 
 </robot>
