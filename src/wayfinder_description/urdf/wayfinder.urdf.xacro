@@ -39,5 +39,6 @@
     <xacro:wheel prefix="rear_right"  x_offset="-0.18" y_offset="-0.21"/>
 
     <xacro:include filename="$(find wayfinder_description)/urdf/sensors.xacro"/>
+    <xacro:include filename="$(find wayfinder_description)/urdf/ros2_control.xacro"/>
 
 </robot>

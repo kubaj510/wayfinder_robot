@@ -4,7 +4,7 @@
   <name>wayfinder_description</name>
   <version>0.0.0</version>
   <description>URDF with xacro description for the Wayfinder checkpoint navigation robot</description>
-  <maintainer email="70848186+kubaj510@users.noreply.github.com">kubaj510r</maintainer>
+  <maintainer email="70848186+kubaj510@users.noreply.github.com">kubaj510</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
