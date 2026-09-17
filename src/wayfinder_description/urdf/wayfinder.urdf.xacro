@@ -35,8 +35,40 @@
 
     <xacro:wheel prefix="front_left"  x_offset="0.18"  y_offset="0.21"/>
     <xacro:wheel prefix="front_right" x_offset="0.18"  y_offset="-0.21"/>
-    <xacro:wheel prefix="rear_left"   x_offset="-0.18" y_offset="0.21"/>
-    <xacro:wheel prefix="rear_right"  x_offset="-0.18" y_offset="-0.21"/>
+    <!--
+        <xacro:wheel prefix="rear_left"   x_offset="-0.18" y_offset="0.21"/>
+        <xacro:wheel prefix="rear_right"  x_offset="-0.18" y_offset="-0.21"/>
+    -->
+
+    <link name="caster_wheel_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.04"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.04"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.1"/>
+            <inertia ixx="0.000064" iyy="0.000064" izz="0.000064" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+
+    <joint name="caster_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="caster_wheel_link"/>
+        <origin xyz="-0.18 0 -0.09" rpy="0 0 0"/>
+    </joint>
+
+    <gazebo reference="caster_wheel_link">
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
+    </gazebo>
 
     <xacro:include filename="$(find wayfinder_description)/urdf/sensors.xacro"/>
     <xacro:include filename="$(find wayfinder_description)/urdf/ros2_control.xacro"/>
