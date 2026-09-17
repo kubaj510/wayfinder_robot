@@ -26,7 +26,7 @@
             <parent link="base_link"/>
             <child link="${prefix}_wheel_link"/>
             <origin xyz="${x_offset} ${y_offset} -0.05" rpy="1.5708 0 0"/>
-            <axis xyz="0 0 1"/>
+            <axis xyz="0 0 -1"/>
         </joint>
     </xacro:macro>
 </robot>
