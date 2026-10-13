@@ -16,6 +16,10 @@ def generate_launch_description():
         get_package_share_directory('wayfinder_gazebo'), 'worlds', 'test_world.sdf'
     )
 
+    rviz_config_path = os.path.join(
+        get_package_share_directory('wayfinder_description'), 'rviz', 'wayfinder_view.rviz'
+    )
+
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
@@ -23,8 +27,23 @@ def generate_launch_description():
         launch_arguments={'gz_args': f'-r {world_path}'}.items()
     )
 
+    # starts AMCL
+    nav2_bringup = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'bringup_launch.py')
+            ),
+            launch_arguments={
+                'use_sim_time': 'true',
+                'map': os.path.join(get_package_share_directory('wayfinder_navigation'), 'maps', 'checkpoint_map.yaml'),
+                'params_file': os.path.join(get_package_share_directory('wayfinder_navigation'), 'config', 'nav2_params.yaml'),
+                'autostart': 'true',
+            }.items()
+        )
+
+
     return LaunchDescription([
         gz_sim,
+        nav2_bringup,
         
         Node(
             package='robot_state_publisher', 
@@ -61,10 +80,34 @@ def generate_launch_description():
         ),
 
         Node(
+            package='twist_stamper',
+            executable='twist_stamper',
+            name='twist_stamper',
+            output='screen',
+            parameters=[{
+                'use_sim_time': True,
+                'frame_id': 'base_link'
+            }],
+            remappings=[
+                ('cmd_vel_in', 'cmd_vel'),
+                ('cmd_vel_out', 'diff_drive_controller/cmd_vel'),
+            ]
+        ),
+
+        Node(
             package='rviz2',
             executable='rviz2',
-            name='rviz2',
+            name='rviz2', 
+            output='screen',
+            parameters=[{'use_sim_time': True}],
+            arguments=['-d', rviz_config_path]
+        ),
+
+        Node(
+            package='wayfinder_vision',
+            executable='marker_detector',
+            name='marker_detector',
             output='screen',
             parameters=[{'use_sim_time': True}]
-        ),
+        )
     ])
