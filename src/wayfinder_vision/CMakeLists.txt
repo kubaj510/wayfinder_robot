@@ -7,6 +7,13 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(wayfinder_interfaces REQUIRED)
+
+find_package(OpenCV REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -22,5 +29,31 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+add_executable(marker_detector 
+    src/main.cpp 
+    src/marker_detector.cpp
+)
+
+target_include_directories(marker_detector PUBLIC
+  ${OpenCV_INCLUDE_DIRS}
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
+ament_target_dependencies(marker_detector
+  rclcpp
+  sensor_msgs
+  cv_bridge
+  wayfinder_interfaces
+)
+
+target_link_libraries(marker_detector
+  ${OpenCV_LIBRARIES}
+)
+
+install(TARGETS
+  marker_detector
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()
