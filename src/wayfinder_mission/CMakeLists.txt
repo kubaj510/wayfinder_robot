@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(nav2_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(wayfinder_interfaces REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -36,7 +37,7 @@ target_include_directories(mission_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-ament_target_dependencies(mission_node rclcpp rclcpp_action geometry_msgs nav2_msgs)
+ament_target_dependencies(mission_node rclcpp rclcpp_action geometry_msgs nav2_msgs wayfinder_interfaces)
 
 install(TARGETS
     mission_node
