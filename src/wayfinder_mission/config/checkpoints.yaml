@@ -1,6 +1,7 @@
 mission_node:
   ros__parameters:
     checkpoint_names: ["checkpoint_1", "checkpoint_2", "checkpoint_3", "checkpoint_4"]
-    checkpoint_x: [3.0, -3.0, -3.0, 3.0]
-    checkpoint_y: [3.0, 3.0, -3.0, -3.0]
+    checkpoint_x: [1.2, -1.2, -1.2, 1.2]
+    checkpoint_y: [2.5, 2.5, -2.5, -2.5]
+    checkpoint_yaw: [0.0, 3.14159, 3.14159, 0.0]
     checkpoint_marker_ids: [1, 2, 3, 4]
