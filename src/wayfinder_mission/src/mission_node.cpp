@@ -38,7 +38,7 @@ void Mission::send_goal(){
 
     while(!client_->wait_for_action_server(5s)){
         if(!rclcpp::ok()){
-            RCLCPP_INFO(this->get_logger(), "mission has been canceled");
+            RCLCPP_INFO(this->get_logger(), "mission canceled while waiting for action server");
             return;
         }
         RCLCPP_INFO(this->get_logger(), "waiting for action server");
@@ -89,16 +89,16 @@ void Mission::feedback_callback(GoalHandleNav::SharedPtr, const std::shared_ptr<
 void Mission::result_callback(const GoalHandleNav::WrappedResult &result){
     switch(result.code){
         case rclcpp_action::ResultCode::SUCCEEDED:
-            RCLCPP_INFO(this->get_logger(), "mission complete");
+            RCLCPP_INFO(this->get_logger(), "navigation succeeded");
             aruco_task();
             break;
         
         case rclcpp_action::ResultCode::CANCELED:
-            RCLCPP_WARN(this->get_logger(), "action was canceled");
+            RCLCPP_WARN(this->get_logger(), "navigation canceled");
             break;
 
         case rclcpp_action::ResultCode::ABORTED:
-            RCLCPP_ERROR(this->get_logger(), "action was aborted");
+            RCLCPP_ERROR(this->get_logger(), "navigation aborted");
             break;
 
         default:
