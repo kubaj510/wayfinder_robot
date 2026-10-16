@@ -27,7 +27,6 @@ def generate_launch_description():
         launch_arguments={'gz_args': f'-r {world_path}'}.items()
     )
 
-    # starts AMCL
     nav2_bringup = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('nav2_bringup'), 'launch', 'bringup_launch.py')
@@ -38,8 +37,7 @@ def generate_launch_description():
                 'params_file': os.path.join(get_package_share_directory('wayfinder_navigation'), 'config', 'nav2_params.yaml'),
                 'autostart': 'true',
             }.items()
-        )
-
+    )
 
     return LaunchDescription([
         gz_sim,
@@ -109,5 +107,20 @@ def generate_launch_description():
             name='marker_detector',
             output='screen',
             parameters=[{'use_sim_time': True}]
+        ),
+
+        Node(
+            package='wayfinder_gui',
+            executable='gui_node',
+            name='gui_node',
+            output='screen'
+        ),
+
+        Node(
+            package='wayfinder_mission',
+            executable='mission_node',
+            name='mission_node',
+            output='screen',
+            parameters=[os.path.join(get_package_share_directory('wayfinder_mission'), 'config', 'checkpoints.yaml')]
         )
     ])
