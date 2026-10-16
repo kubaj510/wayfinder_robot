@@ -1,6 +1,4 @@
 build/
 install/
 log/
-Dockerfile
-compose.yaml
 text.txt
