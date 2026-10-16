@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>760</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ROS2 robot monitor</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainHorizontalLayout" stretch="2,1">
+    <property name="spacing">
+     <number>12</number>
+    </property>
+    <property name="leftMargin">
+     <number>12</number>
+    </property>
+    <property name="topMargin">
+     <number>12</number>
+    </property>
+    <property name="rightMargin">
+     <number>12</number>
+    </property>
+    <property name="bottomMargin">
+     <number>12</number>
+    </property>
+    <item>
+     <widget class="QGroupBox" name="cameraGroupBox">
+      <property name="title">
+       <string>robot camera</string>
+      </property>
+      <layout class="QVBoxLayout" name="cameraLayout">
+       <item>
+        <widget class="QLabel" name="cameraLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>640</width>
+           <height>480</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    background-color: #181825;
+    color: #7f849c;
+    border: 2px dashed #313244;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}</string>
+         </property>
+         <property name="text">
+          <string>no image received
+Waiting for camera topic...</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="logGroupBox">
+      <property name="minimumSize">
+       <size>
+        <width>380</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>ROS2 logs</string>
+      </property>
+      <layout class="QVBoxLayout" name="logSidebarLayout">
+       <item>
+        <layout class="QHBoxLayout" name="logControlsLayout">
+         <item>
+          <widget class="QPushButton" name="clearLogsButton">
+           <property name="text">
+            <string>Clear</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="logPlainTextEdit">
+         <property name="styleSheet">
+          <string notr="true">QPlainTextEdit {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    font-family: monospace;
+    font-size: 12px;
+    border: 1px solid #313244;
+    border-radius: 6px;
+    padding: 6px;
+}</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="maximumBlockCount">
+          <number>2000</number>
+         </property>
+         <property name="placeholderText">
+          <string>Waiting for /rosout messages...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>clearLogsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>logPlainTextEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1200</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1050</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
