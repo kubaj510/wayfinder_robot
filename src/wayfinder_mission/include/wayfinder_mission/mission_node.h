@@ -31,4 +31,7 @@ class Mission : public rclcpp::Node{
         void aruco_task();
 
         size_t current_waypoint_index_ = 0;
+        rclcpp::TimerBase::SharedPtr retry_timer_;
+        int retry_count_ = 0;
+        int max_retries_ = 5;
 };

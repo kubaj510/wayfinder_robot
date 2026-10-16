@@ -58,10 +58,27 @@ void Mission::send_goal(){
 
 void Mission::goal_response_callback(GoalHandleNav::SharedPtr goal_response){
     if(!goal_response){
-        RCLCPP_WARN(this->get_logger(), "goal has been rejected");
+        if(!rclcpp::ok()) return;
 
+        if(retry_count_ < max_retries_){
+            retry_count_++;
+            RCLCPP_INFO(this->get_logger(), "goal rejected, retry %d/%d", retry_count_, max_retries_);
+            retry_timer_ = this->create_wall_timer(
+                std::chrono::seconds(2), 
+                [this](){
+                    retry_timer_->cancel();
+                    retry_timer_.reset();
+                    send_goal();
+                }
+            );
+
+        } else{
+            RCLCPP_WARN(this->get_logger(), "goal has been rejected");
+            rclcpp::shutdown();
+        }
     } else{
         RCLCPP_INFO(this->get_logger(), "goal has been accepted");
+        retry_count_ = 0; 
     }
 }
 
